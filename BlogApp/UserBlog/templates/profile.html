@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid bg-dark text-white ">
+    <div class="container ">
+        <h1 class="display-4">Welcome {{user.get_full_name}}</h1>
+        <p class="lead">This is admin area for your Profile</p>
+
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+
+            {% block blog-content %}
+            {% endblock %}
+
+        </div>
+        <div class="col-4">
+            <div class="card ">
+                <div class="card-header bg-dark text-white">
+                    Your Profile
+
+                    <a href="{% url 'profile-update' %}" class="btn btn-sm btn-warning px-5 float-right">Edit</a>
+
+                </div>
+                <div class="card-body">
+                    {% if user.image %}
+                    <img src="{{user.image.url}}" class="img-fluid" alt="">
+                    {% else %}
+                    <img src="" alt="Profile-image">
+                    {% endif %}
+                    <hr>
+                    <p>Name: <strong>{{user.get_full_name}}</strong>  </p>
+                    <p>username: <strong>{{user.username}}</strong></p>
+                    <p>Email: <strong>{{user.email}}</strong></p>
+
+
+                </div>
+            </div>
+            <div class="card mt-4 ">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
