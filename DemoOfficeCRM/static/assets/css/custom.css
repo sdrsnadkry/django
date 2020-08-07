@@ -1,0 +1,116 @@
+.btn-self{
+padding:5px;
+margin:5px;
+}
+
+.modal-content {
+background: #1a2035 !important;
+}
+
+.bg-darks {
+
+    backdrop-filter: blur(5px);
+}
+
+.card-title{
+    color: #fff !important;
+    font-weight:700 !important;
+}
+
+.img-avatar{
+height:60px !important;
+width: 60px !important;
+}
+
+.nav-pills .nav-item .nav-link.active {
+    color: #fff !important;
+    /* background-color: #9c27b0;
+     box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(156,39,176,.6);
+     */
+    background-color: transparent;
+    border-top: 0.1px solid;
+
+}
+
+
+.tasks-assigned a {
+    color: #aaa !important;
+}
+
+select>option{
+    padding: 50px;
+}
+
+select>option{
+background-color: #202940 !important;
+color: #bbb !important;
+}
+
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+    touch-action: none;
+}
+
+.pagination{
+justify-content: center !important;
+}
+
+.paginate-link{
+    border-radius: 30px!important;
+    transition: all .3s;
+    padding: 0 13px;
+    margin: 0 3px;
+    min-width: 30px;
+    line-height: 30px;
+border-radius: 30px!important;
+background-color: #9c27b0;
+    border-color: #9c27b0;
+    color: #fff;
+    box-shadow: 0 4px 5px 0 rgba(156,39,176,.14), 0 1px 10px 0 rgba(156,39,176,.12), 0 2px 4px -1px rgba(156,39,176,.2);
+}
+}
+
+.text-colors{
+    color: #ddd !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate .current{
+    border-radius: 20px!important;
+    margin: 8px;
+    padding: 3px !important;
+    background-color: #9c27b0 !important;
+    border-color: #9c27b0 !important;
+
+}
+
+div.dataTables_wrapper div.dataTables_paginate .previous {
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+
+    width: 300px !important;
+    background: #202940 !important;
+    color: #fff !important;
+    border: 1px solid #aaa !important;
+    height: 35px !important;
+}
+
+.shake{
+    animation: bellshake 1s infinite !important;
+}
+
+@keyframes bellshake {
+  0% { transform: rotate(0); }
+  15% { transform: rotate(8deg); }
+  30% { transform: rotate(-8deg); }
+  45% { transform: rotate(6deg); }
+  60% { transform: rotate(-6deg); }
+  75% { transform: rotate(4deg); }
+  85% { transform: rotate(-4deg); }
+  92% { transform: rotate(2deg); }
+  100% { transform: rotate(0); }
+}

@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <ul class="nav nav-pills nav-pills-icons tasks-assigned" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#today_task" role="tab" data-toggle="tab">
+                            <i class="material-icons">schedule</i>
+                            Today
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#all_tasks" role="tab" data-toggle="tab">
+                            <i class="material-icons">list</i>
+                            All Tasks
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-5 tab-space">
+                    <div class="tab-pane active" id="today_task">
+                        <div class="card card-nav-tabs">
+                            <h4 class="card-header card-header-success">Tasks Assigned Today</h4>
+                            <div class="card-body pt-3">
+                                <div class="">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal"
+                                            data-target="#exampleModal"><span class="fa fa-plus"> </span> New Task
+                                    </button>
+
+
+                                </div>
+                                <div id="accordion2" role="tablist" aria-multiselectable="true" class="card-collapse">
+                                    <div class="card card-plain">
+                                        <div class="card-header" role="tab" id="headingOne">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                               aria-expanded="false" aria-controls="collapseOne">
+                                                Collapsible Group Item #1
+                                                <i class="material-icons">keyboard_arrow_down</i>
+                                            </a>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse" role="tabpanel"
+                                             aria-labelledby="headingOne">
+                                            <div class="card-body">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                                                terry
+                                                richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+                                                dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="all_tasks">
+                        <div class="card card-nav-tabs">
+                            <h4 class="card-header card-header-success">All Tasks</h4>
+                            <div class="card-body pt-3">
+                                <div class="mt-3">
+                                    <div id="accordion">
+                                        {% for task in tasks_list %}
+                                        <div class="card">
+                                            <div class="card-header" id="headingTwo">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed text-white"
+                                                            data-toggle="collapse"
+                                                            data-target="#collapse-{{task.id}}" aria-expanded="false"
+                                                            aria-controls="collapse-{{task.id}}">
+                                                        {{task.title}} &nbsp;&nbsp;&nbsp; Assigneed Date:
+                                                        {{task.start_date}}
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapse-{{task.id}}" class="collapse"
+                                                 aria-labelledby="heading-{{task.id}}"
+                                                 data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <button class="btn btn-sm btn-success"><span
+                                                            class="fa fa-edit"></span></button>
+                                                    <br>
+                                                    <br>
+                                                    Assigned to : {{task.assignee}} &nbsp;&nbsp; Assigned By:
+                                                    {{task.owner}}
+                                                    <br>
+                                                    Title: {{task.title}} <br>
+                                                    Description: {{task.description}} <br>
+                                                    Assigned Date: {{task.start_date}} <br>
+                                                    Deadline: {{task.end_date}} <br>
+                                                    Reminder: {{task.reminder_date}} <br>
+                                                    Priority: {{task.priority}} <br>
+                                                    Sent status: {{task.sent_status}} <br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="container">
+                                        <div class="pagination">
+                                            {% if tasks_list.has_previous %}
+                                            <a href="?page=1">First </a>
+                                            <a href="?page={{tasks_list.previous_page_number}}#all_tasks">Prev </a>
+                                            {% endif %}
+                                            {% for num in tasks_list.paginator.page_range %}
+                                                {% if tasks_list.number == num%}
+                                                    <strong class="text-white">{{ num }}</strong>
+                                                {% elif num > tasks_list.number|add:'-3' and num < tasks_list.number|add:'3'%}
+                                                    {{ num }}
+                                                {% endif %}
+                                            {% endfor %}
+                                             {% if tasks_list.has_next %}
+                                            <a href="?page={{tasks_list.next_page_number}}"> Next</a>
+                                            <a href="?page={{tasks_list.paginator.num_pages}}"> Last </a>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="modal fade bg-darks  " id="exampleModal" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable  modal-lg">
+                    <div class="modal-content p-2">
+                        <div class="model-header">
+                            <button type="button" class="btn btn-danger btn-sm pull-right mt-0" data-dismiss="modal">
+                                <span class="fa fa-times"></span>
+                            </button>
+                        </div>
+                        <div class="card card-success">
+                            <div class="">
+                                <div class="card-header card-header-info">
+                                    <h4 class="card-title mt-0"> Assign Tasks</h4>
+
+                                </div>
+                                <div class="card-body">
+                                    <form class="mt-4 forms" action="{% url 'tasks' %}" method="POST"
+                                          autocomplete="off">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Assigned By</label>
+                                                    {{task_form.owner}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Assignee</label>
+                                                    {{task_form.assignee}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Title
+                                                        Name</label>
+                                                    {{task_form.title}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Description</label>
+                                                    {{task_form.description}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Sent Status</label>
+                                                    {{task_form.sent_status}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Priotiy</label>
+                                                    {{task_form.priority}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Start Date</label>
+                                                    {{task_form.start_date}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">End Date</label>
+                                                    {{task_form.end_date}}
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Reminder Date</label>
+                                                    {{task_form.reminder_date}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container text-center mt-5">
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-info px-5 py-2">
+                                                Assign Task
+                                            </button>
+
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}

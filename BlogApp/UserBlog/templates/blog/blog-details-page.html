@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid bg-dark text-white ">
+    <div class="container ">
+        <h1 class="display-4 mb-4">{{blog.title}}</h1>
+        <a class="" href="{% url 'Homepage' %}">Home </a>/ <a class="text-muted">{{blog.title}}</a>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h3>Details:</h3>
+
+            <p>{{blog.content}}</p>
+
+        </div>
+        <div class="col-4">
+            <div class="card ">
+                <div class="card-body">
+                    {% if user.image %}
+                    <img src="{{blog.image.url}}" class="img-fluid" alt="">
+                    {% else %}
+                    <img src="" alt="blog-image">
+                    {% endif %}
+                    <p class="mt-5">
+                        Created At: {{blog.created_at}} <br> <br>
+                        Updated At: {{blog.updated_at}} <br>
+                    </p>
+
+                </div>
+            </div>
+            <div class="card mt-4 ">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

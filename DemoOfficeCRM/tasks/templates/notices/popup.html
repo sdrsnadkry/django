@@ -1,0 +1,187 @@
+{% extends 'base.html'  %}
+
+{% block content %}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="">
+                    <div class="card ">
+                        <div class="">
+                            <div class="card-header card-header-success">
+                                <h4 class="card-title mt-0"> POPUP Notice</h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="{% url 'popup' %}" method="POST" autocomplete="off">
+                                    {% csrf_token %}
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <br>
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">POPUP Type</label>
+                                                {{popupF.priority}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Title</label>
+                                                {{popupF.title}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <!--                                                <label>About Me</label>-->
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Notice Details</label>
+                                                    {{popupF.description}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Start
+                                                    Date</label>
+                                                {{popupF.start_date}}
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                        <br>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">End
+                                                    Date</label>
+                                                {{popupF.end_date}}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-info px-5 ">Add Notice</button>
+                                    <div class="clearfix"></div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="">
+                    <div class="card ">
+                        <div class="">
+                            <div class="card-header card-header-success">
+                                <h4 class="card-title mt-0"> All Notices</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="datatables" class="table table-hover">
+                                        <thead class="">
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Title
+                                        </th>
+
+                                        <th>
+                                            Date
+                                        </th>
+
+                                        <th>
+                                            Actions
+                                        </th>
+                                        </thead>
+                                        <tbody>
+                                        {% for popup in popupsobj %}
+                                        <tr>
+                                            <td>
+                                                {{popup.id}}
+                                            </td>
+                                            <td>
+                                                {{popup.title}}
+                                            </td>
+
+                                            <td>
+                                                Start: {{popup.start_date}} <br>
+                                                End: {{popup.end_date}}
+                                            </td>
+
+                                            <td>
+                                                <a type="button" class="btn btn-sm btn-success" data-toggle="modal"
+                                                   data-target="#exampleModal-{{user.id}}"><span
+                                                        class="fa fa-edit"></span></a>
+                                                <a class="btn btn-sm btn-danger deleteRecord" href="javascript:"
+                                                   rel="{{user.id}}" rel1="delete-user"> <span
+                                                        class="fa fa-trash"></span></a>
+
+                                            </td>
+                                        </tr>
+                                        <div class="modal fade bg-darks  " id="exampleModal-{{user.id}}" tabindex="-1"
+                                             role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable  modal-lg">
+
+                                                <div class="modal-content p-4">
+                                                    <div class="card card-success">
+                                                        <div class="">
+                                                            <div class="card-header card-header-info">
+                                                                <h4 class="card-title mt-0"> Update User</h4>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="mt-4" autocomplete="off">
+
+                                                                    <h4 class="font-weight-bold mt-4">User Details:</h4>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Designation</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="designation"
+                                                                                       value="{{user.userdetail.designation}}">
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="row">
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <!--                                                <label>About Me</label>-->
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">About
+                                                                                        User.</label>
+                                                                                    <textarea name="bio" id="bio"
+                                                                                              cols="30"
+                                                                                              class="form-control"
+                                                                                              rows="5">{{user.userdetail.bio}}</textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="clearfix"></div>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        {% block js %}
+        {% endblock %}

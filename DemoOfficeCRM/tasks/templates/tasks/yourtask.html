@@ -1,0 +1,375 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <ul class="nav nav-pills nav-pills-icons tasks-assigned" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#incomplete_task" role="tab" data-toggle="tab">
+                            <i class="material-icons  {% if incomplete_list|length < 1 %} text-success {% else %} text-danger shake {% endif %} ">notification_important</i>
+                            Incomplete
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#today_task" role="tab" data-toggle="tab">
+                            <i class="material-icons">schedule</i>
+                            Today
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#all_tasks" role="tab" data-toggle="tab">
+                            <i class="material-icons">list</i>
+                            All Tasks
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-5 tab-space">
+                    <div class="tab-pane active" id="incomplete_task">
+                        <div class="card card-nav-tabs">
+                            <h4 class="card-header card-header-success">Incomplete Tasks</h4>
+                            <div class="card-body pt-3">
+                                <div class="">
+                                </div>
+                                <div id="accordion3">
+                                    <div id="">
+                                        {% if incomplete_list|length < 1 %}
+                                        <div class="col-6 m-2 alert alert-success p-2">
+                                            <span>
+                                                <i class="material-icons text-white font-weight-bold ">done_all</i> No Incompete Tasks
+                                            </span>
+                                        </div>
+                                        {% else %}
+                                        {% for task in incomplete_list %}
+                                        <div class="card">
+                                            <div class="card-header" id="heading4">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed text-white pull-left"
+                                                            data-toggle="collapse"
+                                                            data-target="#today-incomplete-{{task.id}}"
+                                                            aria-expanded="false"
+                                                            aria-controls="collapse2">
+                                                        {{task.title}} &nbsp;&nbsp;&nbsp; || To:
+                                                        {{task.assignee.get_full_name}}
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="today-incomplete-{{task.id}}" class="collapse"
+                                                 aria-labelledby="heading-{{task.id}}"
+                                                 data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="container">
+
+                                                        <br>
+                                                        Assigned to : {{task.assignee.get_full_name}} &nbsp;&nbsp;
+                                                        Assigned By:
+                                                        {{task.owner.get_full_name}}
+                                                        <br>
+                                                        Title: {{task.title}} <br>
+                                                        Description: {{task.description}} <br>
+                                                        Assigned Date: {{task.start_date}} <br>
+                                                        Deadline: {{task.end_date}} <br>
+                                                        Reminder: {{task.reminder_date}} <br>
+                                                        Priority: {{task.priority}} <br>
+                                                        Sent status: {{task.sent_status}} <br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane " id="today_task">
+                        <div class="card card-nav-tabs">
+                            <h4 class="card-header card-header-success">Tasks Assigned Today</h4>
+                            <div class="card-body pt-3">
+                                <div class="">
+                                </div>
+                                <div id="accordion2">
+                                    <div id="">
+                                        {% if today_list|length < 1 %}
+                                        <div class="col-6 m-2 alert alert-info p-2">
+                                            <span>
+                                                <i class="material-icons text-white font-weight-bold ">clear</i> No Tasks Has Been Assigned Today
+                                            </span>
+                                        </div>
+                                        {% else %}
+                                        {% for task in today_list %}
+                                        <div class="card">
+                                            <div class="card-header" id="heading2">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed text-white pull-left"
+                                                            data-toggle="collapse"
+                                                            data-target="#today-{{task.id}}"
+                                                            aria-expanded="false"
+                                                            aria-controls="collapse2">
+                                                        {{task.title}} &nbsp;&nbsp;&nbsp; || To:
+                                                        {{task.assignee.get_full_name}}
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="today-{{task.id}}" class="collapse"
+                                                 aria-labelledby="heading-{{task.id}}"
+                                                 data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="container">
+
+                                                        <br>
+                                                        Assigned to : {{task.assignee.get_full_name}} &nbsp;&nbsp;
+                                                        Assigned By:
+                                                        {{task.owner.get_full_name}}
+                                                        <br>
+                                                        Title: {{task.title}} <br>
+                                                        Description: {{task.description}} <br>
+                                                        Assigned Date: {{task.start_date}} <br>
+                                                        Deadline: {{task.end_date}} <br>
+                                                        Reminder: {{task.reminder_date}} <br>
+                                                        Priority: {{task.priority}} <br>
+                                                        Sent status: {{task.sent_status}} <br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="all_tasks">
+                        <div class="card card-nav-tabs">
+                            <h4 class="card-header card-header-success">All Tasks Assigned Until Today</h4>
+                            <div class="card-body pt-3">
+                                <div class="mt-3">
+                                    <div class="table-responsive">
+                                        <table id="datatables" class="table table-hover">
+                                            <thead class="">
+                                            <th>
+                                                ID
+                                            </th>
+                                            <th>
+                                                Title
+                                            </th>
+
+                                            <th>
+                                                Assignee
+                                            </th>
+
+                                            <th>
+                                                Assigned By
+                                            </th>
+                                            <th>
+                                                Priority
+                                            </th>
+                                            <th>
+                                                Start Date
+                                            </th>
+                                            <th>
+                                                End date
+                                            </th>
+                                            <th>
+                                                Action
+                                            </th>
+                                            </thead>
+                                            <tbody>
+                                            {% for task in tasks_list %}
+                                            <tr>
+                                                <td>
+                                                    {{task.id}}
+                                                </td>
+                                                <td>
+                                                    {{task.title}}
+                                                </td>
+                                                <td>
+                                                    {{task.assignee.get_full_name}}
+                                                </td>
+
+                                                <td>
+                                                    {{task.owner.get_full_name}}
+                                                </td>
+                                                <td>
+                                                    {{task.priority}}
+                                                </td>
+                                                <td>
+                                                    {{task.start_date}}
+                                                </td>
+                                                <td>
+                                                    {{task.end_date}}
+                                                </td>
+
+                                                <td>
+                                                    <a type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                                       data-target="#exampleModal-{{user.id}}"><span
+                                                            class="fa fa-eye"></span></a>
+
+                                                </td>
+                                            </tr>
+                                            <div class="modal fade bg-darks  " id="exampleModal-{{user.id}}"
+                                                 tabindex="-1"
+                                                 role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-scrollable  modal-lg">
+
+                                                    <div class="modal-content p-4">
+                                                        <div class="card card-success">
+                                                            <div class="">
+                                                                <div class="card-header card-header-primary">
+                                                                    <h4 class="card-title mt-0"> View Task Details</h4>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <form class="mt-4" autocomplete="off">
+                                                                        <div class="row">
+                                                                            <div class="col-md-4 col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">ID</label>
+                                                                                    <input class="form-control"
+                                                                                           type="text"
+                                                                                           disabled
+                                                                                           value="{{task.id}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">Assignee</label>
+                                                                                    <input class="form-control"
+                                                                                           type="text"
+                                                                                           disabled
+                                                                                           value="{{task.assignee.get_full_name}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">Assigned
+                                                                                        By</label>
+                                                                                    <input class="form-control"
+                                                                                           type="text"
+                                                                                           disabled
+
+                                                                                           value="{{task.owner.get_full_name}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div class="col-md-4 col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">Start
+                                                                                        Date</label>
+                                                                                    <input class="form-control"
+                                                                                           disabled
+
+                                                                                           value="{{task.start_date}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div class="col-md-4 col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">Reminder
+                                                                                        Date</label>
+                                                                                    <input class="form-control"
+                                                                                           disabled
+
+                                                                                           value="{{task.reminder_date}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div class="col-md-4 col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">End
+                                                                                        Date</label>
+                                                                                    <input class="form-control"
+                                                                                           disabled
+
+                                                                                           value="{{task.end_date}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div class="col-md-4 col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">Priority</label>
+                                                                                    <input class="form-control"
+                                                                                           disabled
+
+                                                                                           value="{{task.priority}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div class="col-md-4 col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">Sent
+                                                                                        Status</label>
+                                                                                    <input class="form-control"
+                                                                                           disabled
+
+                                                                                           value="{{task.sent_status}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div class="col-md-4 col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">Completed</label>
+                                                                                    <input class="form-control"
+                                                                                           disabled
+
+                                                                                           value="{{task.tasksstatus.completed}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">Title
+                                                                                    </label>
+                                                                                    <input class="form-control"
+                                                                                           disabled
+                                                                                           value="{{task.title}}">
+                                                                                </div>
+                                                                            </div>
+                                                                            <br>
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group">
+                                                                                    <!--                                                <label>About Me</label>-->
+                                                                                    <div class="form-group">
+                                                                                        <label class="bmd-label-floating">Description</label>
+                                                                                        <textarea name="bio" id="bio"
+                                                                                                  cols="30"
+                                                                                                  class="form-control"
+                                                                                                  disabled
+                                                                                                  rows="5">{{task.description}}</textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="clearfix"></div>
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            {% endblock %}

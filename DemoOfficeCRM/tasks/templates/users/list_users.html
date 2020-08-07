@@ -1,0 +1,336 @@
+{% extends 'base.html'  %}
+
+{% block content %}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5 col-sm-12">
+                <div class="">
+                    <div class="card ">
+                        <div class="">
+                            <div class="card-header card-header-success">
+                                <h4 class="card-title mt-0"> Add User</h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="{% url 'users' %}" method="POST" autocomplete="off">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Username</label>
+                                                {{userF.username}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Password</label>
+                                                {{userF.password}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Email address</label>
+                                                {{userF.email}}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Fist Name</label>
+                                                {{userF.first_name}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Last Name</label>
+                                                {{userF.last_name}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Active</label>
+                                                {{userF.is_active}}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <h4 class="font-weight-bold mt-4">User Details:</h4>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Designation</label>
+                                                {{details.designation}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Address</label>
+                                                {{details.address}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">City</label>
+                                                {{details.city}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Country</label>
+                                                {{details.country}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Postal Code</label>
+                                                {{details.code}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">Mobile</label>
+                                                {{details.mobile}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <!--                                                <label>About Me</label>-->
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">About User.</label>
+                                                    {{details.bio}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-info px-5 ">Add User</button>
+                                    <div class="clearfix"></div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 col-sm-12">
+                <div class="">
+                    <div class="card ">
+                        <div class="">
+                            <div class="card-header card-header-success">
+                                <h4 class="card-title mt-0"> Users List</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="datatables" class="table table-hover">
+                                        <thead class="">
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+
+                                        <th>
+                                            Email
+                                        </th>
+
+                                        <th>
+                                            Actions
+                                        </th>
+                                        </thead>
+                                        <tbody>
+                                        {% for user in users %}
+                                        <tr>
+                                            <td>
+                                                {{user.id}}
+                                            </td>
+                                            <td>
+                                                {{user.first_name}} {{user.last_name}}
+                                            </td>
+
+                                            <td>
+                                                {{user.email}}
+                                            </td>
+
+                                            <td>
+                                                <a type="button" class="btn btn-sm btn-success" data-toggle="modal"
+                                                   data-target="#exampleModal-{{user.id}}"><span class="fa fa-edit"></span></a>
+                                                <a class="btn btn-sm btn-danger deleteRecord" href="javascript:"
+                                                   rel="{{user.id}}" rel1="delete-user"> <span class="fa fa-trash"></span></a>
+
+                                            </td>
+                                        </tr>
+                                        <div class="modal fade bg-darks  " id="exampleModal-{{user.id}}" tabindex="-1"
+                                             role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-scrollable  modal-lg">
+
+                                                <div class="modal-content p-4">
+                                                    <div class="card card-success">
+                                                        <div class="">
+                                                            <div class="card-header card-header-info">
+                                                                <h4 class="card-title mt-0"> Update User</h4>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form class="mt-4" action="{% url 'updateuser' %}"
+                                                                      method="POST"
+                                                                      autocomplete="off">
+                                                                    {% csrf_token %}
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Username</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="username"
+                                                                                       value="{{user.username}}">
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Password</label>
+                                                                                <input class="form-control"
+                                                                                       type="password"
+                                                                                       name="password">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Email
+                                                                                    address</label>
+                                                                                <input class="form-control" type="email"
+                                                                                       name="email"
+                                                                                       value="{{user.email}}">
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Fist
+                                                                                    Name</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="firstname"
+                                                                                       value="{{user.first_name}}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Last
+                                                                                    Name</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="lastname"
+                                                                                       value="{{user.last_name}}">
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <h4 class="font-weight-bold mt-4">User Details:</h4>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Designation</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="designation"
+                                                                                       value="{{user.userdetail.designation}}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Mobile</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="mobile"
+                                                                                       value="{{user.userdetail.mobile}}">
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Address</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="address"
+                                                                                       value="{{user.userdetail.address}}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">City</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="city"
+                                                                                       value="{{user.userdetail.city}}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Country</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="country"
+                                                                                       value="{{user.userdetail.country}}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="bmd-label-floating">Postal
+                                                                                    Code</label>
+                                                                                <input class="form-control" type="text"
+                                                                                       name="code"
+                                                                                       value="{{user.userdetail.code}}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <!--                                                <label>About Me</label>-->
+                                                                                <div class="form-group">
+                                                                                    <label class="bmd-label-floating">About
+                                                                                        User.</label>
+                                                                                    <textarea name="bio" id="bio"
+                                                                                              cols="30"
+                                                                                              class="form-control"
+                                                                                              rows="5">{{user.userdetail.bio}}</textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit"
+                                                                            class="btn btn-sm btn-info px-5 ">
+                                                                        Update User
+                                                                    </button>
+                                                                    <div class="clearfix"></div>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        {% block js %}
+        {% endblock %}
